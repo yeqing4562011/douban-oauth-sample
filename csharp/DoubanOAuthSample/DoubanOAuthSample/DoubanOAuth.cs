@@ -12,10 +12,9 @@ namespace DoubanOAuthSample
 
         static string nonce;
         static string timeStamp;
-        static string normalizeUrl = "";
-        static string normalizedRequestParameters = "";
+        static string normalizeUrl;
+        static string normalizedRequestParameters;
         static string protectedResourceUrl;
-
 
         public static void Authorize(string resourceUrl)
         {
@@ -119,7 +118,7 @@ namespace DoubanOAuthSample
 
             return str;
         }
-        //oauth_token_secret=4e94f823353e08de&oauth_token=06438a059352de3512ca9e10b9f89a9f&douban_user_id=2588728
+
         static string Step4GetContent(string protectedResourceUrl, string accessToken)
         {
             string[] token = accessToken.Split('&');
