@@ -7,8 +7,8 @@ namespace DoubanOAuthSample
 {
     public class DoubanOAuth
     {
-        static string consumerKey = "0b35b208290c3b9a21a116187b24b2ce";
-        static string consumerSecret = "850b8aaa8d46d0d5";
+        static string consumerKey = "";
+        static string consumerSecret = "";
 
         static string nonce;
         static string timeStamp;
