@@ -20,4 +20,8 @@
 2. 对于Visual Studio 2005用户，请建立C# Console Application，将OAuthBase.cs、Program.cs两个文件添加到项目中，
    并在项目引用中添加System.Web（引用 -> 添加引用 -> .Net -> System.Web）
 
-3. Ctrl+F5运行项目即可
+3. 到 http://www.douban.com/service/apikey/apply 申请API Key
+
+4. 将获得的API Key和API Key Secret填入Program.cs中apiKey和apiKeySecret两个变量中
+
+4. Ctrl+F5运行项目即可
