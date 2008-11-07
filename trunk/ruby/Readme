@@ -1,0 +1,15 @@
+﻿-------关于本示例程序--------
+本示例程序提供最基本的Douban OAuth认证的Ruby示例代码
+ 
+更多其他语言版本的Douban OAuth认证示例代码在 http://code.google.com/p/douban-oauth-sample/ 上提供
+
+有任何疑问，可以到 http://www.douban.com/group/dbapi/ 上提问
+
+-------如何运行本示例程序----------
+1. gem install oauth -y
+
+2. 到 http://www.douban.com/service/apikey/apply 申请API Key
+
+3. 将获得的API Key和API Key Secret填入DoubanOAuthSample.rb中api_key和api_key_secret两个变量里
+
+4. 运行程序即可
