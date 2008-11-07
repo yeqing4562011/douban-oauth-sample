@@ -1,0 +1,23 @@
+﻿-------关于本示例程序--------
+本示例程序提供最基本的Douban OAuth认证的C#示例代码
+ 
+其中OAuthBase.cs代码来源于 http://code.google.com/p/oauth/
+ 
+更多其他语言版本的Douban OAuth认证示例代码在 http://code.google.com/p/douban-oauth-sample/ 上提供
+
+有任何疑问，可以到 http://www.douban.com/group/dbapi/ 上提问
+
+感谢leyang豆友 (http://www.douban.com/people/leyang/) 的大力协助
+
+-------如何运行本示例程序----------
+目前仅提供Windows用户使用Visual Studio运行本示例程序的方法
+
+欢迎Linux、Mac上的Mono用户提供在其他平台运行本示例程序的方法
+
+1. 建议安装包含C#功能的Visual Studio 2008或以上版本，免费的Visual Studio C# Express 2008可以到下面链接下载：
+   http://www.microsoft.com/express/download/
+
+2. 对于Visual Studio 2005用户，请建立C# Console Application，将OAuthBase.cs、Program.cs两个文件添加到项目中，
+   并在项目引用中添加System.Web（引用 -> 添加引用 -> .Net -> System.Web）
+
+3. Ctrl+F5运行项目即可
