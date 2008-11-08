@@ -1,0 +1,46 @@
+-------关于本示例程序--------
+本示例程序提供最基本的Douban OAuth认证的php示例代码
+ 
+更多其他语言版本的Douban OAuth认证示例代码在 http://code.google.com/p/douban-oauth-sample/ 上提供
+
+有任何疑问，可以到 http://www.douban.com/group/dbapi/ 上提问
+
+
+-------如何运行本示例程序--------
+1，安装DOM。请检查PHP是否支持DOM，若不支持，需重新编译PHP。configure参数参考如下：
+
+./configure --prefix=/usr/local/php  --with-zlib-dir --with-bz2  --with-libxml-dir=/usr/local/libxml2 --with-gd=/usr/local/gd2 --with-freetype-dir --with-jpeg-dir --with-png-dir --enable-mbstring  --with-config-file-path=/etc --with-iconv --disable-ipv6 --enable-static --enable-maintainer-zts --enable-zend-multibyte --enable-inline-optimization --enable-zend-multibyte --enable-sockets --enable-soap --with-curl=/usr/local/curl --enable-pcntl  --with-mcrypt=/usr/local/libmcrypt --with-xmlrpc --enable-pcntl
+
+2，安装HTTP扩展库。请确认PHP的扩展库HTTP是否已经安装。使用PEAR安装HTTP库方法请参考pear manual(http://pear.php.net/manual/)；也可以先下载HTTP库HTTP package(http://pecl.php.net/packages.php?catpid=11&catname=HTTP)，然后通过phpize编译成扩展安装(推荐)：
+(phpize在Ubuntu中包含在php5-dev包中)
+
+$ cd extname
+$ phpize
+$ ./configure
+$ make
+$ sudo make install
+
+上述过程执行完毕之后，还需要修改php.ini（请先确认正确的php.ini路径）。在extension_dir一项加上http.so的路径；同时在extension一项加上http.so。
+
+如在作者机子上，对应项内容为：
+
+; Directory in which the loadable extensions (modules) reside.
+extension_dir = "/usr/local/php/lib/php/extensions/no-debug-zts-20060613/"
+....
+; ... or under UNIX:
+;
+extension=http.so
+
+3，安装Zend Gdata。下载Zend Gdata(http://framework.zend.com/download/gdata)并解压缩，并把Zend Gdata的library路径添加到php.ini的include_path项中，注意各项path之间以":"隔开。
+
+4，安装douban-php-client(http://code.google.com/p/douban-php-client/)。从Downloads下载tgz包并解压；或者从Source获取源码(推荐)。修改php.ini中的include_path，添加douban-php-client的library路径。
+
+如在作者机子上，include_path项内容为：
+
+; UNIX: "/path1:/path2"
+include_path = ".:/home/flyingww/douban-php-client/library:/home/flyingww/ZendGdata-1.5.2/library/"
+
+最后，把你的apikey和secret填到oauth.php的相应位置就可以运行了！(api key 到http://www.douban.com/service/apikey/apply 申请)
+$APIKEY= 'your key';
+$API_SECRET= 'your secret';
+
