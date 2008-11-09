@@ -1,15 +1,15 @@
 # -----------------------------------------------------------------
-# æœ¬ç¨‹åºæä¾›æœ€åŸºæœ¬çš„Douban OAuthè®¤è¯çš„Rubyç¤ºä¾‹ä»£ç 
-# æ›´å¤šå…¶ä»–è¯­è¨€ç‰ˆæœ¬çš„Douban OAuthè®¤è¯ç¤ºä¾‹ä»£ç åœ¨ http://code.google.com/p/douban-oauth-sample/ ä¸Šæä¾›
-# æœ‰ä»»ä½•ç–‘é—®ï¼Œå¯ä»¥åˆ° http://www.douban.com/group/dbapi/ ä¸Šæé—®
+# ±¾³ÌĞòÌá¹©×î»ù±¾µÄDouban OAuthÈÏÖ¤µÄRubyÊ¾Àı´úÂë
+# ¸ü¶àÆäËûÓïÑÔ°æ±¾µÄDouban OAuthÈÏÖ¤Ê¾Àı´úÂëÔÚ http://code.google.com/p/douban-oauth-sample/ ÉÏÌá¹©
+# ÓĞÈÎºÎÒÉÎÊ£¬¿ÉÒÔµ½ http://www.douban.com/group/dbapi/ ÉÏÌáÎÊ
 # -----------------------------------------------------------------
 
-# Douban OAuthè®¤è¯åŒ…æ‹¬ä»¥ä¸‹å››æ­¥å†…å®¹
+# Douban OAuthÈÏÖ¤°üÀ¨ÒÔÏÂËÄ²½ÄÚÈİ
 # 
-# 1. è·å–Request Token
-# 2. ç”¨æˆ·ç¡®è®¤æˆæƒ
-# 3. æ¢å–Access Token
-# 4. è®¿é—®å—é™èµ„æº
+# 1. »ñÈ¡Request Token
+# 2. ÓÃ»§È·ÈÏÊÚÈ¨
+# 3. »»È¡Access Token
+# 4. ·ÃÎÊÊÜÏŞ×ÊÔ´
      
 gem 'oauth'
 require 'oauth/consumer'
@@ -25,15 +25,15 @@ api_key_secret = ""
                                 :authorize_path=>"/service/auth/authorize"
                               }
 
-puts "1. è·å–Request Token"
+puts "1. »ñÈ¡Request Token"
 @request_token=@consumer.get_request_token
 
-puts "2. ç”¨æˆ·ç¡®è®¤æˆæƒ"
-puts "è¯·å°†ä¸‹é¢urlç²˜è´´åˆ°æµè§ˆå™¨ä¸­ï¼Œå¹¶åŒæ„æˆæƒï¼ŒåŒæ„åæŒ‰ä»»æ„é”®ç»§ç»­:"
+puts "2. ÓÃ»§È·ÈÏÊÚÈ¨"
+puts "Çë½«ÏÂÃæurlÕ³Ìùµ½ä¯ÀÀÆ÷ÖĞ£¬²¢Í¬ÒâÊÚÈ¨£¬Í¬Òâºó°´ÈÎÒâ¼ü¼ÌĞø:"
 puts @request_token.authorize_url
 gets
 
-puts "3. æ¢å–Access Token"
+puts "3. »»È¡Access Token"
 @access_token=@request_token.get_access_token
 
 # i should re-generate access_token proxy here, 
@@ -44,10 +44,9 @@ puts "3. æ¢å–Access Token"
                                                                 @access_token.token,
                                                                 @access_token.secret
 
-puts "4. è®¿é—®å—é™èµ„æº"
+puts "4. ·ÃÎÊÊÜÏŞ×ÊÔ´"
 @response=@access_token.post "/miniblog/saying", %q{<?xml version='1.0' encoding='UTF-8'?>
   <entry xmlns:ns0="http://www.w3.org/2005/Atom" xmlns:db="http://www.douban.com/xmlns/">
     <content>Ruby OAuth Authorized</content>
   </entry>
 },  {"Content-Type" =>  "application/atom+xml"}
-
