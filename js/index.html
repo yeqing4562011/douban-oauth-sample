@@ -1,0 +1,78 @@
+﻿<html>
+	<head>
+		<title>Douban OAuth Sample</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<script src="air/AIRAliases.js" type="text/javascript"></script>
+		<script src="air/AIRIntrospector.js" type="text/javascript"></script>
+		<script src="mootools/mootools-1.2-core.js" type="text/javascript"></script>
+		<script src="oauth/sha1.js" type="text/javascript"></script>
+		<script src="oauth/oauth.js" type="text/javascript"></script>
+		<script src="douban_oauth_sample.js" type="text/javascript"></script>
+		<script>
+			function println(str){
+				$('console').appendText(str)
+				$('console').grab(new Element('br'))
+			}
+			
+			function successGetRequestToken(request_token, request_token_secret){
+					println("获取的Request Token: " + request_token);
+					println("获取的Request Token Secret: " + request_token_secret);
+					userAuth();
+			}
+			
+			function userAuth(){
+				println("");
+				println("2. 用户确认授权")
+				println("请将下面url粘贴到浏览器中，并同意授权，同意后按下面按钮继续:")
+				println(getUserAuthorizationURL());
+				$('console').grab(new Element('button', {
+					html: "同意后点击继续",
+					events: {
+						click: successUserAuth
+					}
+				}))
+				println("");
+			}
+			
+			function successUserAuth(){
+				println("");
+				println("3. 换取Access Token")
+				getAccessToken(successGetAccessToken, function(xhr){
+					println("错误: " + xhr.status)
+					println(xhr.responseText)
+				})
+			}
+			
+			function successGetAccessToken(access_token, access_token_secret){
+				println("获取的Access Token: " + access_token);
+				println("获取的Access Token Secret: " + access_token_secret);
+				println("");
+				println("4. 访问受限资源")
+				sendMiniblog(successSendMiniblog, function(xhr){
+					println("错误: " + xhr.status)
+					println(xhr.responseText)
+				})
+			}
+			
+			function successSendMiniblog(){
+				println("发送广播成功")
+			}
+			
+			window.addEvent('domready', function() {
+				println("1. 获取Request Token")
+				getRequestToken(successGetRequestToken, function(xhr){
+					println("错误: " + xhr.status)
+					println(xhr.responseText)
+				})
+			})
+		</script>
+		<style>
+			body {padding:0;margin: 0;background: #FEFEFE;}
+			body { font: 12px Arial, Helvetica, sans-serif; line-height: 150%; }
+			#console {width:100%}
+		</style>
+	</head>
+	<body>
+		<div id="console"></div>
+	</body>
+</html>

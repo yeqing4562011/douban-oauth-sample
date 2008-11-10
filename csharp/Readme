@@ -24,4 +24,4 @@
 
 4. 将获得的API Key和API Key Secret填入Program.cs中apiKey和apiKeySecret两个变量中
 
-4. Ctrl+F5运行项目即可
+5. Ctrl+F5运行项目即可

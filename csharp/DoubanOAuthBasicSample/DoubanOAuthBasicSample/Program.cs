@@ -36,8 +36,8 @@ namespace DoubanOAuthBasicSample
         string apiKeySecret = "";
         string requestToken = "";
         string requestTokenSecret = "";
-        string accessToken = "e9cd6627dec6a7e7bd6832779c53f7b5";
-        string accessTokenSecret = "c6495005ed0e7fa2";
+        string accessToken = "";
+        string accessTokenSecret = "";
 
         Uri requestTokenUri = new Uri("http://www.douban.com/service/auth/request_token");
         Uri accessTokenUri = new Uri("http://www.douban.com/service/auth/access_token");
