@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<application xmlns="http://ns.adobe.com/air/application/1.1">
+	<id>com.douban.oauthsample</id>
+	<filename>Douban OAuth Sample</filename>
+	<name>DoubanOAuthSample</name>
+	<version>0.1</version>
+	<description>Douban OAuth Sample</description>
+
+	<initialWindow>
+		<content>index.html</content>
+		<title>Douban OAuth Sample</title>
+		<visible>true</visible>
+		<width>600</width>
+		<height>400</height>
+	</initialWindow>
+	
+	<installFolder>Douban OAuth Sample</installFolder>
+	<programMenuFolder>DoubanOAuthSample</programMenuFolder>
+</application>
