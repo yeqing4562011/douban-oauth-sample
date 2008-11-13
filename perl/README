@@ -1,0 +1,35 @@
+Perl-OAuth-Sample for Douban API
+---------------------------------
+本脚本（douban-oauth.pl）是一个使用豆瓣API进行OAuth服务认证授权的演示脚本
+该脚本演示的是一次简单的豆瓣OAuth API认证过程。
+更多信息请访问：
+	其他语言的demo： http://code.google.com/p/douban-oauth-sample/
+	豆瓣认证API： http://www.douban.com/service/apidoc/auth
+	OAuth： http://oauth.net/
+	OAuth::Lite::Consumer： http://search.cpan.org/~lyokato/OAuth-Lite-1.14/lib/OAuth/Lite/Consumer.pm
+
+note：该脚本编写方式比较简单粗暴，为的是尽量简洁，实际编程过程中，本人并不鼓励也不会采用这种编程模式，推荐使用pm，推荐使用面向对象的代码风格
+
+使用方法：
+	$perl douban-oauth.pl
+按照提示，将生成的url粘贴复制到浏览器中，使用您的豆瓣账号对perl-oauth-sample应用进行授权，然后按任意键继续脚本运行
+该脚本将利用您的授权，自动在您的广播中新建一条消息：Perl OAuth 认证成功
+
+系统需求：
+	Perl解释器，OAuth::Lite::Consumer模块
+
+OAuth::Lite::Consumer模块安装方法：
+	推荐使用模块管理器（CPAN或ppm）管理器进行安装，否则需要自行解决依赖。
+
+	Unix+Perl5
+	#cpan install OAuth::Lite::Consumer
+ 
+	Windows+AtcivePerl
+	c:\>ppm install OAuth::Lite::Consumer 
+
+
+2008-11-13
+lobatt(LICH)
+lob4tt@gmail.com
+
+
