@@ -12,9 +12,10 @@
 # 4. 访问受限资源
      
 gem 'oauth'
+require'oauth'
 require 'oauth/consumer'
-api_key = "012c4c877ccfe4120384e596766fac36"
-api_key_secret = "29819e878b84ae68"
+api_key = ""
+api_key_secret = ""
 
 @consumer=OAuth::Consumer.new(
                                 api_key, 
