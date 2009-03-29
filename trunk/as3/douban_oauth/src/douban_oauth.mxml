@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
+	<mx:Script>
+		<![CDATA[
+			import org.iotashan.oauth.OAuthToken;
+			import flash.net.navigateToURL;
+			import org.iotashan.oauth.OAuthSignatureMethod_HMAC_SHA1;
+			import org.iotashan.oauth.OAuthConsumer;
+			import org.iotashan.oauth.OAuthRequest;
+			
+			private static var DOUBAN_KEY : String = "xxxxxxxxxxxxxxxxxxxxxxxxxxx";
+			private static var DOUBAN_SECRET_KEY : String = "xxxxxxxxxxxxxxxxxxxxxxxxxxx";
+			
+			private static var DOUBAN_REQUEST : String = "http://www.douban.com/service/auth/request_token";
+			private static var DOUBAN_AUTHORIZE : String = "http://www.douban.com/service/auth/authorize";
+			private static var DOUBAN_ACCESS_TOKEN : String = "http://www.douban.com/service/auth/access_token";
+			
+			private static var DOUBAN_MICROBLOG : String = "http://api.douban.com/miniblog/saying";
+			
+			private var oAuth_Token : String = '';
+			private var oAuth_Token_Secret : String = '';
+			private var oAuth_URL : String = '';
+			private var douban_id : String = '';
+						
+			/**
+			 * 生成获取request token的URL
+			 */ 
+			private function  generalDoubanRequestURL() : String
+			{
+				var oauth : OAuthRequest = new OAuthRequest("GET", DOUBAN_REQUEST);
+				oauth.consumer = new OAuthConsumer(DOUBAN_KEY, DOUBAN_SECRET_KEY);
+				return oauth.buildRequest(new OAuthSignatureMethod_HMAC_SHA1(), OAuthRequest.RESULT_TYPE_URL_STRING);
+			}
+			
+			/**
+			 * 获取未授权Request Token 
+			 */
+			public function generalOAuthToken() : void
+			{
+				var urlReq : URLRequest = new URLRequest(generalDoubanRequestURL());
+				var urlLoader : URLLoader = new URLLoader();
+	
+				urlLoader.addEventListener(Event.COMPLETE, doRequest);
+	            urlLoader.addEventListener(Event.OPEN, doRequest);
+	           	urlLoader.addEventListener(HTTPStatusEvent.HTTP_STATUS, doRequest);
+	            urlLoader.addEventListener(IOErrorEvent.IO_ERROR, doRequest);
+	            urlLoader.addEventListener(ProgressEvent.PROGRESS, doRequest);
+	            urlLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, doRequest);
+	            
+	            try
+	            {
+	            	urlLoader.load(urlReq);
+	            }
+	            catch(err : Error)
+	            {
+	            	
+	            }            			
+			}
+			
+
+			/**
+			 * 获取Request Token
+			 */ 
+			private function doRequest(event : Event) : void
+			{
+				 switch (event.type) 
+				 {
+	                    case Event.COMPLETE:
+	                    	var _result : String = event.target.data;
+							var params : URLVariables = new URLVariables();
+							params.decode(_result);
+							oAuth_Token = params["oauth_token"]
+							oAuth_Token_Secret = params["oauth_token_secret"];
+							
+							oAuth_URL = DOUBAN_AUTHORIZE + "?oauth_token=" + oAuth_Token;
+	                    break;
+	             }			
+			}	
+			
+			/**
+			 * 用户确认授权
+			 */
+			private function goAuthorize() : void
+			{
+				var urlRequest : URLRequest = new URLRequest(oAuth_URL);
+				navigateToURL(urlRequest, 'blank');
+			}
+
+			/**
+			 * 生成换取Access Token使用的URL。
+			 */ 
+			private function generalDoubanTokenURL() : String
+			{
+				var oauth : OAuthRequest = new OAuthRequest("GET", DOUBAN_ACCESS_TOKEN);
+				oauth.consumer = new OAuthConsumer(DOUBAN_KEY, DOUBAN_SECRET_KEY);
+				oauth.token = new OAuthToken(oAuth_Token, oAuth_Token_Secret);
+				return oauth.buildRequest(new OAuthSignatureMethod_HMAC_SHA1(), OAuthRequest.RESULT_TYPE_URL_STRING);
+			}
+			 
+			/**
+			 * 用户完成授权后，换取Access Token
+			 */ 
+			private function generalAccess_Token() : void
+			{
+				var urlReq : URLRequest = new URLRequest(generalDoubanTokenURL());
+				var urlLoader : URLLoader = new URLLoader();
+	
+				urlLoader.addEventListener(Event.COMPLETE, doToken);
+	            urlLoader.addEventListener(Event.OPEN, doToken);
+	           	urlLoader.addEventListener(HTTPStatusEvent.HTTP_STATUS, doToken);
+	            urlLoader.addEventListener(IOErrorEvent.IO_ERROR, doToken);
+	            urlLoader.addEventListener(ProgressEvent.PROGRESS, doToken);
+	            urlLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, doToken);
+	            
+	            try
+	            {
+	            	urlLoader.load(urlReq);
+	            }
+	            catch(err : Error)
+	            {
+	            	
+	            } 			
+			}
+			 
+			/**
+			 * 换取token的event事件
+			 */ 
+			private function doToken(event : Event) :void
+			{
+				 switch (event.type) 
+				 {
+	                    case Event.COMPLETE:
+	                    	var _result : String = event.target.data;
+							var params : URLVariables = new URLVariables();
+							params.decode(_result);
+							oAuth_Token = params["oauth_token"];
+							oAuth_Token_Secret = params["oauth_token_secret"];
+							douban_id = params["douban_user_id"];
+	                    break;
+	             }				
+			}
+			
+			/**
+			 * General Access douban.com's resource url
+			 */ 
+			private function generalPostURL(res : String, params : Object = null) : String
+			{
+				var oauth : OAuthRequest = new OAuthRequest(OAuthRequest.HTTP_MEHTOD_POST, res);
+				oauth.consumer = new OAuthConsumer(DOUBAN_KEY, DOUBAN_SECRET_KEY);
+				oauth.token = new OAuthToken(oAuth_Token, oAuth_Token_Secret);
+				return oauth.buildRequest(new OAuthSignatureMethod_HMAC_SHA1(), OAuthRequest.RESULT_TYPE_URL_STRING);			
+			}
+			
+			/**
+			 * Send Micro Blog
+			 */ 
+			private function saying() : void
+			{
+				var entry : String = '';
+				entry += "<?xml version='1.0' encoding='UTF-8'?>";
+				entry += "<entry xmlns:ns0=\"http://www.w3.org/2005/Atom\" xmlns:db=\"http://www.douban.com/xmlns/\">";
+				entry += "<content>Send From Flex Application...</content>";
+				entry += "</entry>";
+				
+				var url : String = generalPostURL(DOUBAN_MICROBLOG);
+				var params : URLVariables = new URLVariables();
+				params.decode((url.split('?') as Array)[1]);
+
+				var urlRequest : URLRequest =  new URLRequest();
+				urlRequest.method = URLRequestMethod.POST;
+				urlRequest.url = "http://api.douban.com/miniblog/saying";
+				urlRequest.data = entry;
+								
+				var oauth : String = new String("OAuth realm='',");
+				oauth += " oauth_consumer_key=" + params['oauth_consumer_key'] + ",";
+				oauth += " oauth_nonce=" + params['oauth_nonce'] + ",";
+				oauth += " oauth_timestamp=" + params['oauth_timestamp'] + ",";
+				oauth += " oauth_signature_method=" + params['oauth_signature_method'] + ",";
+				oauth += " oauth_signature=" + params['oauth_signature'] + ",";
+				oauth += " oauth_token=" + params['oauth_token'];
+								
+				urlRequest.requestHeaders.push(new URLRequestHeader('Authorization', oauth));
+				urlRequest.requestHeaders.push(new URLRequestHeader('Content-Type', 'application/atom+xml'));
+				
+				var urlLoader : URLLoader = new URLLoader();
+				urlLoader.load(urlRequest);
+				
+			}			 			
+		]]>
+	</mx:Script>
+</mx:Application>
