@@ -1,0 +1,1 @@
+check this: http://code.google.com/p/douban-php-client/wiki/Installation
